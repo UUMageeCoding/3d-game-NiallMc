@@ -14,9 +14,13 @@ public class ThirdPersonController : MonoBehaviour
     
     // Jump parameters
     [Header("Jump Settings")]
-    [SerializeField] private float jumpHeight = 1f;
+    [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float fallMultiplier = 2.5f;
+
+    {Header("Slope Settings")}
+    [SerializeField] private float MaxSlopeAngle = 300f;
+
     
     // State variables
     private Vector3 playerVelocity;
@@ -90,7 +94,7 @@ public class ThirdPersonController : MonoBehaviour
         controller.Move(direction * Time.deltaTime * currentSpeed);
         
         // Handle jumping
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
+        if (Input.GetButtonDown("Jump") )//&& groundedPlayer)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
         }
