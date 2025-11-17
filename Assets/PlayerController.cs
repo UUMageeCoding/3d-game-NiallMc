@@ -5,7 +5,7 @@ public class ThirdPersonController : MonoBehaviour
 {
     // Character controller component
     private CharacterController controller;
-    private Camera mainCamera;
+    private Camera firstPersonCamera;
     
     // Movement parameters
     [Header("Movement Settings")]
@@ -31,11 +31,11 @@ public class ThirdPersonController : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
-        mainCamera = Camera.main;
+        firstPersonCamera = Camera.main;
         
-        if (mainCamera != null)
+        if (firstPersonCamera != null)
         {
-            cameraTransform = mainCamera.transform;
+            cameraTransform = firstPersonCamera.transform;
         }
         
         // Lock and hide cursor for camera control
@@ -81,14 +81,13 @@ public class ThirdPersonController : MonoBehaviour
         {
             direction.Normalize();
         }
-
-        // Handle character rotation to face movement direction
+        /*// Handle character rotation to face movement direction
         if (direction != Vector3.zero)
         {
             // Calculate rotation to face movement direction
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        }
+        }*/
         if (OnSlope())
         {
            direction = Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;

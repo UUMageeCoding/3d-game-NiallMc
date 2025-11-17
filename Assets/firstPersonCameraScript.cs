@@ -3,33 +3,26 @@ using UnityEngine;
 public class firstPersonCameraScript : MonoBehaviour
 {
 
-        [Header("Rotation Settings")]
-    [SerializeField] private float rotationSensitivity = 0.01f;
-    [SerializeField] private float minVerticalAngle = -30.0f;
-    [SerializeField] private float maxVerticalAngle = 60.0f;
-    private float currentYRotation;
-    private float currentXRotation;
+    public float mouseSensitivity = 100f;
+    public Transform playerBody;
 
-    
+    float xRotation = 0f;
 
-    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-
-        currentYRotation = 0;
-        currentXRotation = 0;
+        
     }
 
-    private void LateUpdate()
+    private void Update()
     {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        currentYRotation += Input.GetAxis("Mouse X") * rotationSensitivity;
-        currentXRotation -= Input.GetAxis("Mouse Y") * rotationSensitivity;
-        currentXRotation = Mathf.Clamp(currentXRotation, minVerticalAngle, maxVerticalAngle);
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        transform.Rotate(currentXRotation, 0f, 0f);
-
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 }
