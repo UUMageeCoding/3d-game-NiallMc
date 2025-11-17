@@ -27,6 +27,8 @@ public class ThirdPersonController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
+
+    public bool teleport = false;
     
     private void Start()
     {
@@ -88,14 +90,22 @@ public class ThirdPersonController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }*/
+
         if (OnSlope())
         {
-           direction = Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+            direction = Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
         }
 
         // Apply movement with appropriate speed
-        float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : moveSpeed;
-        controller.Move(direction * Time.deltaTime * currentSpeed);
+        if (teleport == false)
+        {
+            float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : moveSpeed;
+            controller.Move(direction * Time.deltaTime * currentSpeed);
+        }
+        else if (teleport == true)
+        {
+        }
+        
 
         // Handle jumping
         if (Input.GetButtonDown("Jump"))//&& groundedPlayer)
