@@ -6,10 +6,9 @@ public class doorScript : MonoBehaviour
 {
     public Transform teleporter1;
     public GameObject Player;
-    Vector3 pos = Vector3.zero;
+    Vector3 pos;
     CharacterController characterController;
     Quaternion blank;
-    bool location = false;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,26 +21,14 @@ public class doorScript : MonoBehaviour
         //Debug.Log("collision");
         if (door.CompareTag("Player"))
         {
-            location = true;
             teleporter1.transform.GetPositionAndRotation(out pos, out blank);
             Debug.Log(pos);
 
+            characterController.enabled = false;
             Player.transform.position = teleporter1.position;
-            
+            characterController.enabled = true;
             Debug.Log("Teleport");
         }
-    }
-    void LateUpdate()
-    {
-        if (pos != Vector3.zero)
-        {
-            Player.transform.position = pos;
-            location = false;
-            pos = Vector3.zero;
-            Debug.Log("Teleport");
-        }
-        
-
     }
 
 }
