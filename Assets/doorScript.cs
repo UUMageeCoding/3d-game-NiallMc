@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class doorScript : MonoBehaviour
 {
-    public Transform teleporter1;
+    public Transform teleporter;
     public GameObject Player;
     Vector3 pos;
     CharacterController characterController;
@@ -21,11 +21,11 @@ public class doorScript : MonoBehaviour
         //Debug.Log("collision");
         if (door.CompareTag("Player"))
         {
-            teleporter1.transform.GetPositionAndRotation(out pos, out blank);
+            teleporter.transform.GetPositionAndRotation(out pos, out blank);
             Debug.Log(pos);
 
             characterController.enabled = false;
-            Player.transform.position = teleporter1.position;
+            Player.transform.position = teleporter.position;
             characterController.enabled = true;
             Debug.Log("Teleport");
         }
